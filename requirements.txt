@@ -1,0 +1,4 @@
+pandas
+pytrends
+bar-chart-race
+numpy
