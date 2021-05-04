@@ -1,0 +1,9 @@
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
+body.unnecessary {
+    padding-top: 3.5rem;
+  }
+.v {
+    margin-top: 1rem;
+    border-left: 1px solid rgb(152, 153, 152);
+    height: 500px;
+}
