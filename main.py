@@ -1,4 +1,6 @@
 import flask
+from chartrace import *
+import time
 app = flask.Flask(__name__, template_folder='templates')
 
 @app.route('/',methods =["GET","POST"])
@@ -9,8 +11,15 @@ def MainPage():
 @app.route('/get_vid',methods =["GET"])
 def makevideo():
   data = flask.request.args.to_dict()
-  print(data['date'])
-  return flask.jsonify("1")
+  keywords = list(data['keywords'].split(','))
+  timeframe = convertDateToTimeFrame(data['start_date'],data['end_date'])
+  country = ''
+  if(data['country']!= ''):
+    country = convertcountryTotwoletterCode(data['country'])
+  filename = "{}.mp4".format(timeframe)
+  # makeracechart(keywords,timeframe,country,filename)
+  fetchTrendsData(keywords,timeframe,country,filename)
+  return flask.send_file(filename)
 
 
 
