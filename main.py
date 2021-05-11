@@ -2,10 +2,13 @@ import flask
 from flask import request
 from chartrace import *
 import time
-import os
 import pandas as pd
 import numpy
+from threading import Timer
+
+
 app = flask.Flask(__name__, template_folder='templates')
+
 
 @app.route('/',methods =["GET","POST"])
 def MainPage():
@@ -41,13 +44,10 @@ def get_vid():
   filename = "{}{}.mp4".format(keywords,timeframe)
   filename = filename.replace('"', "'") 
   filename = filename.replace(',', ", ") 
-  @after_this_request
-  def remove_file(response):
-        try:
-            os.remove(filename)
-        except:
-          print("error")
+  t = Timer(2.0, deletevideos)
+  t.start() 
   return flask.send_file(filename,mimetype="video/mp4")
+
 
 @app.route('/keyword_cvs', methods=['GET'])
 def keyword_cvs():

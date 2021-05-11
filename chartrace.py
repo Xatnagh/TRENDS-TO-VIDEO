@@ -2,6 +2,7 @@ from pytrends.request import TrendReq
 import pandas as pd
 import json
 pytrends = TrendReq(hl='en-US', tz=360)
+import os
 
 def convertDateToTimeFrame(sd,ed):
      return ("{} {}".format(sd,ed))
@@ -16,7 +17,12 @@ def fetchTrendsData(keywordslist,timeframe, country):
      df = pytrends.interest_over_time()
      del df['isPartial']
      return df
-     
+def deletevideos():
+  mydir = os.getcwd()
+  filelist = [ f for f in os.listdir(mydir) if f.endswith(".mp4") ]
+  for f in filelist:
+      os.remove(os.path.join(mydir, f))
+deletevideos     
 
 def makeracechart(df,filename):
      import bar_chart_race as bcr
