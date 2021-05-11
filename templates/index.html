@@ -17,6 +17,7 @@
     <link href= "{{ url_for('static', filename='css/jumbotroncopy.css') }}" rel="stylesheet">
       <!-- Our own css file -->
     <link href= "{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='c3/c3.css') }}" rel="stylesheet">
   </head>
 
   <body>
@@ -68,11 +69,9 @@
           <div class="col-md-4">
             <h5>Enter Your Racers!</h5>
              <!-- TODO: add auto complete -->
-            <form onsubmit="addKeywordToList()" autocomplete="off"  action ="#">
             <input type="text" id = "keyword">
-            <input type="submit" text = "add">
+            <input type="submit" text = "add" onclick="addKeywordToList()">
 
-            </form>
 
             <h5>These are your contestants:</h5>
             <ul id=keyword_list>
@@ -84,7 +83,7 @@
 
              <select id = "crs-region" style="display: none;"> Region</select> 
 
-            <h5>Date (LEAVE BLANK FOR LAST 2 YEARS)</h5>
+            <h5>Date</h5>
             <select name="Select Date" id="Dates" onchange="showOrHide_customdates()">
               <option value="6m">Last 6 months to present</option>
               <option value="1y">last year to present</option>
@@ -93,23 +92,38 @@
             </select>
             <div id = "custom_date"> 
                <h5>Date Start(year-month-day)</h5>  
-              <input type="text" placeholder="Example: (2016-7-12)" id = "date_start">
+              <input type="text" placeholder="Example: (2016-07-12)" id = "date_start">
               <h5>TO</h5>
               <h5>Date End(year-month-day)</h5>  
-              <input id = "date_end" type="text" placeholder="Example: (2020-7-12)">
+              <input id = "date_end" type="text" placeholder="Example: (2020-07-12)">
+            </div>
+            <br>
+            <br>
+            <p><a class="btn btn-secondary" href="#" role="button" onclick= "getVideoFromBackEnd()">GO! &raquo;</a></p>
+            <div id=loadingscreen style="display: none;">
+                <img id=loadingimg src="{{ url_for('static',filename = 'loading.gif') }}" alt="">
+                <h1 id=LoadingMessage>Loading your video, please wait up to 10 secs</h1>
             </div>
             
-            
-            <p><a class="btn btn-secondary" href="#" role="button" onclick= "getVideoFromBackEnd()">GO! &raquo;</a></p>
           </div>
 
           <div class="col-md-1 v"></div>
 
           <div class="col-md-7">
-            *************** OUR VIDEO GRAPH OUTPUT HOPEFULLY WITH A DOWNLOAD BUTTON ***************
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <div id=grapharea style="display: none;">
+
+            </div>
+            <div id = grapharea>
+                    <div id="chart"></div>
+            </div>
+            <div id = videoarea>
+                <video width="1000" height="500" controls id = "resultvideo">
+                    <source src="" type="video/mp4" id = "vidsource">
+                    Your browser does not support the video tag.
+                  </video>
+              <p><a class="btn btn-secondary" href="#" role="button" onclick="downloadVideo()">Download</a></p>
+            </div>
+            
           </div>
           
         </div>
@@ -123,6 +137,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="{{ url_for('static',filename = 'c3/c3.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static',filename = 'script.js') }}"></script>
     <script src="{{ url_for('static',filename = 'countryselector.js') }}"></script>

@@ -5,3 +5,6 @@
 .crs-country{
   float: left;
 }
+#videoarea{
+  display:none;
+}

@@ -10,15 +10,15 @@ def convertcountryTotwoletterCode(country):
           data = json.load(f)
           return data[country]
 
-def fetchTrendsData(keywordslist,timeframe, country ,filename):
+def fetchTrendsData(keywordslist,timeframe, country):
      
      pytrends.build_payload(kw_list=keywordslist, cat=0, timeframe=timeframe,geo = country)
      df = pytrends.interest_over_time()
-     print(df)
-     makeracechart(df,filename)
+     del df['isPartial']
+     return df
+     
 
 def makeracechart(df,filename):
-     del df['isPartial']
      import bar_chart_race as bcr
      bcr.bar_chart_race(
      df=df,

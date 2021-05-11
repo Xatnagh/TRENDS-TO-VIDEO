@@ -7,7 +7,6 @@ pytrend.build_payload(
 kw_list=keywords,
 cat=0,
 timeframe='2020-11-06 2021-05-05',
-
 geo='DK',
 )
 

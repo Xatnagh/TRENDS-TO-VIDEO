@@ -1,0 +1,6 @@
+FLASK_APP=main.py FLASK_ENV=development flask run 
+//this refreshes the flask server wihtout needing to quit everytime i save in main.py
+
+
+
+you can use XMLhttps request to get files from backend but ONLY POST works for some reason
