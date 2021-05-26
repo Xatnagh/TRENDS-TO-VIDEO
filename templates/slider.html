@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Trend to video</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/">
+
+    <!-- Bootstrap core CSS -->
+    <link href= "{{ url_for('static', filename='css/bootcsscopy.css') }}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href= "{{ url_for('static', filename='css/jumbotroncopy.css') }}" rel="stylesheet">
+      <!-- Our own css file -->
+    <link href= "{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='c3/c3.css') }}" rel="stylesheet">
+  </head>
+
+  <body>
+    <main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">TRENDZ!</h1>
+          <p>Hi, welcome to Trendz, an app inspired by the Google Trends features to help you visualize  and learn more about the trends that inspire and intrigue you, but with more fun and flexibility!</p>
+        </div>
+      </div>
+      
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Trendz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Trending Now</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Top Trends</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Who Knows</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Maybe</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Enter Your Racers!</h5>
+             <!-- TODO: add auto complete -->
+            <input type="text" id = "keyword">
+            <input type="submit" text = "add" onclick="addKeywordToList()">
+
+
+            <h5>These are your contestants:</h5>
+            <ul id=keyword_list>
+              
+            </ul>
+
+            <h5>Country (LEAVE BLANK FOR WORLD)</h5>
+             <select class = "crs-country" data-region-id="crs-region" id = "crs-country"> </select> 
+
+             <select id = "crs-region" style="display: none;"> Region</select> 
+
+            <h5>Date</h5>
+            <select name="Select Date" id="Dates" onchange="showOrHide_customdates()">
+              <option value="6m">Last 6 months to present</option>
+              <option value="1y">last year to present</option>
+              <option value="2y">last 2 years to present</option>
+              <option value="custom"> Enter your own</option>
+            </select>
+            <div id = "custom_date"> 
+               <h5>Date Start(year-month-day)</h5>  
+              <input type="text" placeholder="Example: (2016-07-12)" id = "date_start">
+              <h5>TO</h5>
+              <h5>Date End(year-month-day)</h5>  
+              <input id = "date_end" type="text" placeholder="Example: (2020-07-12)">
+            </div>
+            <br>
+            <br>
+            <p><a class="btn btn-secondary" href="#" role="button" onclick= "getVideoFromBackEnd()">GO! &raquo;</a></p>
+            <div id=loadingscreen style="display: none;">
+                <img id=loadingimg src="{{ url_for('static',filename = 'loading.gif') }}" alt="">
+                <h1 id=LoadingMessage>Loading your video, please wait up to 10 secs</h1>
+            </div>
+            
+          </div>
+
+          <div class="col-md-1 v"></div>
+
+          <div class="col-md-7">
+            <div id=grapharea style="display: none;">
+
+            </div>
+            <div id = grapharea>
+                    <div id="chart"></div>
+            </div>
+            <div id = videoarea>
+                <video width="1000" height="500" controls id = "resultvideo">
+                    <source src="" type="video/mp4" id = "vidsource">
+                    Your browser does not support the video tag.
+                  </video>
+              <p><a class="btn btn-secondary" href="#" role="button" onclick="downloadVideo()">Download</a></p>
+            </div>
+            
+          </div>
+          
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
+
+    </main>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="{{ url_for('static',filename = 'c3/c3.min.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static',filename = 'script.js') }}"></script>
+    <script src="{{ url_for('static',filename = 'countryselector.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script  src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+  </body>
+</html>

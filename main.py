@@ -15,6 +15,11 @@ def MainPage():
   if flask.request.method == "GET":
     return flask.render_template("index.html")
 
+@app.route('/map',methods =["GET","POST"])
+def Slide():
+  if flask.request.method == "GET":
+    return flask.render_template("slider.html")
+
 @app.route('/make_vid',methods =["get","POST"])
 def makevideo():
   data = request.args.to_dict()
